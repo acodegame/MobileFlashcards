@@ -9,10 +9,10 @@ import {
   KeyboardAvoidingView,
   Easing,
 } from 'react-native';
-import { scaleDP } from '../utils/helpers';
+import { scaleDP, getNewDeckData } from '../utils/helpers';
 
-const LARGE_TITLE_SIZE = scaleDP(16);
-const SMALL_TITLE_SIZE = scaleDP(8);
+const LARGE_SIZE = scaleDP(16);
+const SMALL_SIZE = scaleDP(8);
 
 const styles = {
   container: {
@@ -21,10 +21,10 @@ const styles = {
     alignItems: 'center'
   },
   title: {
-    marginTop: LARGE_TITLE_SIZE,
-    fontSize: LARGE_TITLE_SIZE,
+    marginTop: LARGE_SIZE,
+    fontSize: LARGE_SIZE,
     textAlign: 'center',
-    marginBottom: LARGE_TITLE_SIZE,
+    marginBottom: LARGE_SIZE,
   },
   inputText: {
     height: scaleDP(15),
@@ -52,12 +52,13 @@ const styles = {
 export default class NewDeck extends Component {
   constructor(props) {
     super(props);
-    this.titleSize = new Animated.Value(LARGE_TITLE_SIZE);
-    this.marginBottom = new Animated.Value(LARGE_TITLE_SIZE);
+    this.titleSize = new Animated.Value(LARGE_SIZE);
+    this.marginBottom = new Animated.Value(LARGE_SIZE);
   }
 
   state = {
     text: '',
+    data: undefined
   }
 
   componentWillMount () {
@@ -68,6 +69,12 @@ export default class NewDeck extends Component {
   componentWillUnmount() {
     this.keyboardDidShowSub.remove();
     this.keyboardDidHideSub.remove();
+  }
+
+  componentDidMount() {
+    this.setState({
+      data: getNewDeckData()
+    })
   }
 
   createTimingAnimation(value, toValue, duration, easing, delay = 0) {
@@ -84,15 +91,15 @@ export default class NewDeck extends Component {
 
   _keyboardDidShow = (event) => {
     Animated.parallel([
-      this.createTimingAnimation(this.titleSize, SMALL_TITLE_SIZE, 120, Easing.ease),
-      this.createTimingAnimation(this.marginBottom, SMALL_TITLE_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.titleSize, SMALL_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.marginBottom, SMALL_SIZE, 120, Easing.ease),
     ]).start();
   };
 
   _keyboardDidHide = (event) => {
     Animated.parallel([
-      this.createTimingAnimation(this.titleSize, LARGE_TITLE_SIZE, 120, Easing.ease),
-      this.createTimingAnimation(this.marginBottom, LARGE_TITLE_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.titleSize, LARGE_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.marginBottom, LARGE_SIZE, 120, Easing.ease),
     ]).start();
   };
 
@@ -101,6 +108,13 @@ export default class NewDeck extends Component {
   }
 
   render() {
+    if (this.state.data === undefined) {
+      // Render placeholder here if this is a network call.
+      return null;
+    }
+
+    const {title, inputTextPlaceholder, buttonText} = this.state.data;
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior='padding'>
         <Animated.Text
@@ -109,21 +123,25 @@ export default class NewDeck extends Component {
             marginBottom: this.marginBottom,
             marginTop: this.marginBottom
           }]}>
-          What is the title of your new deck ?
+          {title}
         </Animated.Text>
         <Animated.View style={{marginBottom: this.marginBottom}}>
           <TextInput
             style={styles.inputText}
             onChange={(text) => this.setState({text})}
             value={this.state.text}
-            placeholder='Deck Title'
+            placeholder={inputTextPlaceholder}
           />
         </Animated.View>
+        {/*
+          * Move this button to a subs in components and abstract it's logic.
+          */
+        }
         <TouchableOpacity
           style={[styles.button, {backgroundColor: this.state.text === '' ? 'gray' : 'black'}]}
           onPress={this.createNewDeck}
           disabled={this.state.text === ''}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
