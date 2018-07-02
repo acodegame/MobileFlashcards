@@ -36,7 +36,6 @@ const styles = {
     width: scaleDP(100),
   },
   button: {
-    backgroundColor: 'black',
     height: scaleDP(12),
     width: scaleDP(34),
     borderRadius: scaleDP(2),
@@ -85,15 +84,15 @@ export default class NewDeck extends Component {
 
   _keyboardDidShow = (event) => {
     Animated.parallel([
-      this.createTimingAnimation(this.titleSize, SMALL_TITLE_SIZE, event.duration, Easing.ease),
-      this.createTimingAnimation(this.marginBottom, SMALL_TITLE_SIZE, event.duration, Easing.ease),
+      this.createTimingAnimation(this.titleSize, SMALL_TITLE_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.marginBottom, SMALL_TITLE_SIZE, 120, Easing.ease),
     ]).start();
   };
 
   _keyboardDidHide = (event) => {
     Animated.parallel([
-      this.createTimingAnimation(this.titleSize, LARGE_TITLE_SIZE, 200, Easing.ease),
-      this.createTimingAnimation(this.marginBottom, LARGE_TITLE_SIZE, 200, Easing.ease),
+      this.createTimingAnimation(this.titleSize, LARGE_TITLE_SIZE, 120, Easing.ease),
+      this.createTimingAnimation(this.marginBottom, LARGE_TITLE_SIZE, 120, Easing.ease),
     ]).start();
   };
 
@@ -121,7 +120,7 @@ export default class NewDeck extends Component {
           />
         </Animated.View>
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, {backgroundColor: this.state.text === '' ? 'gray' : 'black'}]}
           onPress={this.createNewDeck}
           disabled={this.state.text === ''}>
           <Text style={styles.buttonText}>Submit</Text>
