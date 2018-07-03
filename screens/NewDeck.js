@@ -10,6 +10,7 @@ import {
   Easing,
 } from 'react-native';
 import { scaleDP, getNewDeckData } from '../utils/helpers';
+import { saveDeckTitle } from '../utils/api';
 
 const LARGE_SIZE = scaleDP(16);
 const SMALL_SIZE = scaleDP(8);
@@ -103,8 +104,16 @@ export default class NewDeck extends Component {
     ]).start();
   };
 
-  createNewDeck() {
-    // TODO: Dispatch action for adding a new deck
+  createNewDeck = () => {
+    // Update Redux
+
+    // Save new deck info in DB.
+    saveDeckTitle(this.state.text);
+
+    // Clear the inputText field
+    this.setState({ text: '' });
+
+    // Navigate to DeckList View.
   }
 
   render() {
@@ -128,7 +137,7 @@ export default class NewDeck extends Component {
         <Animated.View style={{marginBottom: this.marginBottom}}>
           <TextInput
             style={styles.inputText}
-            onChange={(text) => this.setState({text})}
+            onChangeText={(text) => this.setState({text})}
             value={this.state.text}
             placeholder={inputTextPlaceholder}
           />
