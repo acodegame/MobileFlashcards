@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { getDecks } from '../utils/api';
+import { connect } from 'react-redux';
+import { receiveDecks } from '../actions';
+import Deck from '../components/subs/Deck';
 
-export default class DeckList extends Component {
+class DeckList extends Component {
   state = {
     results: ''
   }
   componentWillMount() {
-    getDecks().then(results => this.setState({ results }));
+    getDecks().then(results => {
+      this.props.dispatch(receiveDecks(results));
+      this.setState({ results });
+    });
   }
+
   render() {
+    const { results } = this.props
     return (
       <View>
-        <Text>{JSON.stringify(this.state.results)}</Text>
+        <FlatList
+          data={Object.keys(results).map(key => results[key])}
+          renderItem={({item, seperators}) => <Deck item={item} seperators={seperators}/>}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     )
   }
 }
+
+const mapStateToProps = (state, props) => {
+  return ({
+    ...props,
+    results: state,
+  })
+}
+
+export default connect(mapStateToProps)(DeckList)

@@ -9,8 +9,10 @@ import {
   KeyboardAvoidingView,
   Easing,
 } from 'react-native';
-import { scaleDP, getNewDeckData } from '../utils/helpers';
+import { connect } from 'react-redux';
+import { scaleDP, getNewDeckData, navigateToHome } from '../utils/helpers';
 import { saveDeckTitle } from '../utils/api';
+import { addDeck } from '../actions';
 
 const LARGE_SIZE = scaleDP(16);
 const SMALL_SIZE = scaleDP(8);
@@ -50,7 +52,7 @@ const styles = {
   }
 }
 
-export default class NewDeck extends Component {
+class NewDeck extends Component {
   constructor(props) {
     super(props);
     this.titleSize = new Animated.Value(LARGE_SIZE);
@@ -106,6 +108,7 @@ export default class NewDeck extends Component {
 
   createNewDeck = () => {
     // Update Redux
+    this.props.dispatch(addDeck(this.state.text));
 
     // Save new deck info in DB.
     saveDeckTitle(this.state.text);
@@ -114,6 +117,7 @@ export default class NewDeck extends Component {
     this.setState({ text: '' });
 
     // Navigate to DeckList View.
+    this.props.navigation.dispatch(navigateToHome());
   }
 
   render() {
@@ -156,3 +160,5 @@ export default class NewDeck extends Component {
     );
   }
 }
+
+export default connect()(NewDeck);

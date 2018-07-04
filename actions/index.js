@@ -9,16 +9,17 @@ export function receiveDecks (decks) {
   }
 }
 
-export function addDeck (deck) {
+export function addDeck (title) {
   return {
     type: ADD_DECK,
-    deck,
+    title,
   }
 }
 
-export function addCard (card) {
+export function addCard (title, card) {
   return {
     type: ADD_CARD,
+    title,
     card,
   }
 }

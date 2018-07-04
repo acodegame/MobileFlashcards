@@ -68,9 +68,9 @@ export function saveDeckTitle(title) {
     .then(results => {
       const data = JSON.parse(results);
       if (data === null) {
-        AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify({[title]: {}}));
+        AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify({[title]: {title: title}}));
       } else if (Object.keys(data).indexOf(title) === -1) {
-        data[title] = {};
+        data[title] = {title: title};
         AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(data))
       }
     });

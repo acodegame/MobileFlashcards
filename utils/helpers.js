@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation';
 import { PixelRatio } from 'react-native';
 
 export function scaleDP(dp) {
@@ -11,4 +12,8 @@ export function getNewDeckData() {
     inputTextPlaceholder: 'Deck Title',
     buttonText: 'Submit',
   }
+}
+
+export function navigateToHome() {
+  return NavigationActions.navigate({routeName: 'DeckList'});
 }
