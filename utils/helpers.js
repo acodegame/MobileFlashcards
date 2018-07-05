@@ -14,6 +14,14 @@ export function getNewDeckData() {
   }
 }
 
+export function getAddCardData() {
+  return {
+    questionPlaceholder: 'Add your question here.',
+    answerPlaceholder: 'Add the answer here.',
+    buttonText: 'Submit',
+  }
+}
+
 export function navigateToHome() {
   return NavigationActions.navigate({routeName: 'DeckList'});
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity  } from 'react-native';
 import { scaleDP } from '../../utils/helpers';
+import DeckView from '../DeckView';
 
 const styles = {
   container: {
@@ -29,10 +30,10 @@ const styles = {
 const Deck = props => {
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.openDeckView}>
         <View style={styles.container}>
           <Text style={styles.title}>{props.item.title}</Text>
-          <Text style={styles.cards}>{`${props.item.questions ? props.item.questions.length() : 0} cards`}</Text>
+          <Text style={styles.cards}>{`${props.item.questions.length} cards`}</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.seperator}/>

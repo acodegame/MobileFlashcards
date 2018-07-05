@@ -22,7 +22,11 @@ class DeckList extends Component {
       <View>
         <FlatList
           data={Object.keys(results).map(key => results[key])}
-          renderItem={({item, seperators}) => <Deck item={item} seperators={seperators}/>}
+          renderItem={({item, seperators}) =>
+            <Deck
+              item={item}
+              seperators={seperators}
+              openDeckView={() => this.props.navigation.navigate('DeckView', item)}/>}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
