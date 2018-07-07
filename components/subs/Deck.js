@@ -32,8 +32,15 @@ const Deck = props => {
     <View>
       <TouchableOpacity onPress={props.openDeckView}>
         <View style={styles.container}>
-          <Text style={styles.title}>{props.item.title}</Text>
-          <Text style={styles.cards}>{`${props.item.questions.length} cards`}</Text>
+          <Text style={[styles.title, {color: props.item.questions ? 'black' : 'gray'}]}>
+            {props.item.title}
+          </Text>
+          {
+            props.item.questions &&
+            <Text style={styles.cards}>
+              {props.item.questions.length} card{props.item.questions.length !== 1 ? 's' : ''}
+            </Text>
+          }
         </View>
       </TouchableOpacity>
       <View style={styles.seperator}/>

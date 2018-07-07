@@ -68,12 +68,11 @@ class AddCard extends Component {
     // Save new card info in DB.
     addCardToDeck(title, card);
 
+    // Navigate to card's DeckView
+    this.props.navigation.navigate('DeckView', this.props.navigation.state.params);
+
     // Clear the inputText fields
     this.setState({ question: '', answer: '' });
-
-    // Navigate to card's DeckView
-    // TODO: Fix the navigation. It is not navigating.
-    this.props.navigation.dispatch('DeckView', this.props.navigation.state.params);
   }
 
   render() {

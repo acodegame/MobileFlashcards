@@ -10,8 +10,9 @@ import DeckView from './components/DeckView';
 import NewDeck from './screens/NewDeck';
 import AddCard from './components/AddCard';
 import QuizView from './components/QuizView';
+import QuizScorePage from './components/QuizScorePage';
 import { purple, white } from './utils/colors';
-import { scaleDP } from './utils/helpers';
+import { scaleDP, setLocalNotification } from './utils/helpers';
 import { Constants } from 'expo';
 
 function FlashcardsStatusBar ({ backgroundColor, ...props }) {
@@ -103,6 +104,15 @@ const RootStack = createStackNavigator(
     QuizView: {
       screen: QuizView,
       navigationOptions: ({navigation}) => stackNavigationOptions('Quiz'),
+    },
+    QuizScorePage: {
+      screen: QuizScorePage,
+      navigationOptions: ({navigation}) => {
+        return Object.assign(stackNavigationOptions(navigation.state.params.deck.title + ' Quiz Score'), {
+          headerLeft: null,
+          headerTitleStyle: { textAlign: 'center' },
+        });
+      }
     }
   },
   {
@@ -111,6 +121,10 @@ const RootStack = createStackNavigator(
 );
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>

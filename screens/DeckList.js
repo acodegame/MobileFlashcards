@@ -18,6 +18,17 @@ class DeckList extends Component {
 
   render() {
     const { results } = this.props
+
+    if (Object.keys(results).length === 0 && results.constructor === Object) {
+      // No Decks in the DeckListView, then prompt user to create a Deck
+      return (
+        <Deck
+          item={{title: 'Create New Deck'}}
+          openDeckView={() => this.props.navigation.navigate('NewDeck')}
+        />
+      )
+    }
+
     return (
       <View>
         <FlatList

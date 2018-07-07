@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait",
+    "name": "Mobile Flashcards",
+    "description": "The best learning app in the world.",
+    "slug": "mobileflashcards",
+    "version": "1.0",
+    "icon": "appIcon.png",
+    "notification": {
+      "icon": "http://free-icon-rainbow.com/i/icon_04578/icon_045780_256.png"
+    },
+    "ios": {
+     "bundleIdentifier": "org.shashmis.mobileflashcards.exp",
+    },
+    "android": {
+     "package": "org.shashmis.mobileflashcards.exp",
+    }
   }
 }

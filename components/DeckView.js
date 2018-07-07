@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { scaleDP } from '../utils/helpers';
 
@@ -43,6 +43,20 @@ const styles = {
 }
 
 class DeckView extends Component {
+  stateQuiz = (data) => {
+    if (this.props.deck.questions.length === 0) {
+      ToastAndroid.showWithGravityAndOffset(
+        'Add at least 1 card to start the Quiz.',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      );
+    } else {
+      this.props.navigation.navigate('QuizView', data)
+    }
+  }
+
   render() {
     const data = this.props.deck;
     if (data === undefined) {
@@ -52,17 +66,19 @@ class DeckView extends Component {
       <View style={styles.container}>
         <View style={styles.deckDetails}>
           <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.cards}>{`${data.questions.length} cards`}</Text>
+          <Text style={styles.cards}>{data.questions.length} card{data.questions.length !== 1 ? 's' : ''}</Text>
         </View>
         <View style={styles.actionButtons}>
           <TouchableOpacity
-            onPress={() => {this.props.navigation.navigate('AddCard', data)}}
+            onPress={() => this.props.navigation.navigate('AddCard', data)}
             style={styles.button}>
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
+          {/** QuizView button will be enabled only if the deck has more than 0 cards. */}
           <TouchableOpacity
-            onPress={() => {this.props.navigation.navigate('QuizView', data)}}
-            style={[styles.button, {backgroundColor: 'black'}]}>
+            onPress={() => this.stateQuiz(data)}
+            style={[styles.button, {backgroundColor: data.questions.length === 0 ? 'gray' : 'black'}]}
+            >
             <Text style={[styles.buttonText, {color: 'white'}]}>Start Quiz</Text>
           </TouchableOpacity>
         </View>
