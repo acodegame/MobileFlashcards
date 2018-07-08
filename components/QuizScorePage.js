@@ -71,10 +71,10 @@ class QuizScorePage extends Component {
 
         <View style={styles.actionButtons}>
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('QuizView', deck)}>
-            <Text style={styles.buttonText}>Start quiz again.</Text>
+            <Text style={styles.buttonText}>Restart Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, {backgroundColor: 'black'}]} onPress={() => this.props.navigation.navigate('DeckView', deck)}>
-            <Text style={[styles.buttonText, {color: 'white'}]}>Go to deck.</Text>
+            <Text style={[styles.buttonText, {color: 'white'}]}>Back to deck.</Text>
           </TouchableOpacity>
         </View>
       </View>

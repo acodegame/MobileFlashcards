@@ -117,7 +117,7 @@ class NewDeck extends Component {
     this.setState({ text: '' });
 
     // Navigate to DeckList View.
-    this.props.navigation.dispatch(navigateToHome());
+    this.props.navigation.navigate('DeckView', {title: this.state.text});
   }
 
   render() {

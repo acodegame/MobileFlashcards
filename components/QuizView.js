@@ -80,6 +80,7 @@ class QuizView extends Component {
       this.setState(prevState => ({
         score: prevState.score + score,
         cardNumber: prevState.cardNumber + 1,
+        questionCard: true,
       }));
     }
   }

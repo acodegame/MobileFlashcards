@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { createStore } from 'redux';
@@ -120,7 +120,7 @@ const RootStack = createStackNavigator(
   }
 );
 
-export default class App extends React.Component {
+export default class App extends Component {
   componentDidMount() {
     setLocalNotification();
   }
