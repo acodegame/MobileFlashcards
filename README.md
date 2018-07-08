@@ -34,7 +34,7 @@ After you've checked out this repository into your local, install all the missin
 ```
 yarn install
 ```
-OR
+Or
 
 ```
 npm install
@@ -48,7 +48,7 @@ To run the server
 ```
 yarn start
 ```
-OR
+Or
 
 ```
 npm start
@@ -64,7 +64,7 @@ npm start
 
 * **Shashikant Mishra** - [acodegame](https://github.com/acodegame)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/acodegame/MobileFlashcards/graphs/contributors) who participated in this project.
 
 ## License
 
